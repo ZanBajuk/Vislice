@@ -6,4 +6,4 @@ jupididup
 
 dupi dup pup kabup
 
-jipup
+jipup skup
