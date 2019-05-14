@@ -63,14 +63,8 @@ class Igra:
                 return NAPACNA_CRKA
 
 bazen_besed = []
-def dat(vhodnaDat):
-    sez = []
-    with open(vhodnaDat, encoding='utf8') as vh:
-        for vrstica in vh:
-            sez.append(vrstica)
-    return sez
-#bazen_besed = dat("besede.txt")
-
+with open("VisliceProjekt/Vislice/besede.txt") as f:
+    bazen_besed = [beseda.strip() for beseda in f.readlines()]
 i = Igra("NEKAJ")
 i.crke = ['N',"E","K","A","M","R"]
 # print(i.napacne_crke())
