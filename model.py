@@ -7,7 +7,7 @@ PORAZ = 'X'
 
 class Igra:
     def __init__(self, geslo):
-        self.geslo = geslo
+        self.geslo = geslo.upper()
         self.crke = []
 
     def napacne_crke(self):
@@ -71,10 +71,13 @@ def dat(vhodnaDat):
     return sez
 #bazen_besed = dat("besede.txt")
 
-i = Igra("nekaj")
-i.crke = ['n',"e","k","a","m","r","j"]
+i = Igra("NEKAJ")
+i.crke = ['N',"E","K","A","M","R"]
 # print(i.napacne_crke())
 # print(i.pravilne_crke())
 print(i.zmaga())
+print(i.ugibaj("N"))
+print(i.ugibaj("Đ"))
+print(i.ugibaj("J"))
 # print(i.pravilni_del_gesla())
 # print(i.nepravilni_ugibi())
