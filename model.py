@@ -14,11 +14,67 @@ class Igra:
         return [c for c in self.crke if c not in self.geslo]
     
     def pravilne_crke(self):
-        pass
+        return [c for c in self.crke if c in self.geslo]
+
+    def stevilo_napak(self):
+        return len(self.napacne_crke())
+
+    def zmaga(self):
+        return all(c in self.crke for c in self.geslo)
+
+    def poraz(self):
+        return self.stevilo_napak() > STEVILO_DOVOLJENIH_NAPAK
+
+    def pravilni_del_gesla(self):
+        niz = ""
+        for i in self.geslo:
+            if i in self.crke:
+                niz += i
+            else:
+                niz += "_"
+        return niz
+
+    def nepravilni_ugibi(self):
+        sez = self.napacne_crke()
+        if sez == []:
+            return ""
+        niz = sez[0]
+
+        for i in sez[1:]:
+            niz += " "
+            niz += i
+        return niz
+
+    def ugibaj(self, crka):
+        crka = crka.upper()
+        if crka in self.crke:
+            return PONOVLJENA_CRKA
+        else:
+            self.crke.append(crka)
+        if crka in self.geslo:
+            if self.zmaga():
+                return ZMAGA
+            else:
+                return PRAVILNA_CRKA
+        else:
+            if self.poraz():
+                return PORAZ
+            else:
+                return NAPACNA_CRKA
+
+bazen_besed = []
+def dat(vhodnaDat):
+    sez = []
+    with open(vhodnaDat, encoding='utf8') as vh:
+        for vrstica in vh:
+            sez.append(vrstica)
+    return sez
+#bazen_besed = dat("besede.txt")
 
 i = Igra("nekaj")
-print(i.napacne_crke())
-i.crke = ['a',"l","v","n"]
-print(i.napacne_crke())
-print(i.pravilne_crke())
-print("test")
+i.crke = ['n',"e","k","a","m","r","j"]
+# print(i.napacne_crke())
+# print(i.pravilne_crke())
+print(i.zmaga())
+# print(i.pravilni_del_gesla())
+# print(i.nepravilni_ugibi())
