@@ -21,3 +21,4 @@ print(i.napacne_crke())
 i.crke = ['a',"l","v","n"]
 print(i.napacne_crke())
 print(i.pravilne_crke())
+print("test")
