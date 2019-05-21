@@ -8,7 +8,7 @@ ZMAGA = 'W'
 PORAZ = 'X'
 
 bazen_besed = []
-with open("VisliceProjekt/Vislice/besede.txt") as f:
+with open("VisliceProjekt/Vislice/besede.txt", encoding = "utf-8") as f:
     bazen_besed = [beseda.strip() for beseda in f.readlines()]
 
 class Igra:
@@ -38,6 +38,7 @@ class Igra:
                 niz += i
             else:
                 niz += "_"
+            niz += " "
         return niz
 
     def nepravilni_ugibi(self):
@@ -74,7 +75,6 @@ def nova_igra():
 i = Igra("NEKAJ")
 i.crke = ['N',"E","K","A","M","R"]
 
-nova_igra()
 # print(i.napacne_crke())
 # print(i.pravilne_crke())
 #print(i.zmaga())
