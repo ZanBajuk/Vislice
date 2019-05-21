@@ -1,9 +1,15 @@
+import random
+
 STEVILO_DOVOLJENIH_NAPAK = 10
 PRAVILNA_CRKA = "+" 
 PONOVLJENA_CRKA = "o"
 NAPACNA_CRKA = '-'
 ZMAGA = 'W'
 PORAZ = 'X'
+
+bazen_besed = []
+with open("VisliceProjekt/Vislice/besede.txt") as f:
+    bazen_besed = [beseda.strip() for beseda in f.readlines()]
 
 class Igra:
     def __init__(self, geslo):
@@ -62,11 +68,13 @@ class Igra:
             else:
                 return NAPACNA_CRKA
 
-bazen_besed = []
-with open("VisliceProjekt/Vislice/besede.txt") as f:
-    bazen_besed = [beseda.strip() for beseda in f.readlines()]
+def nova_igra():
+    return Igra(random.choice(bazen_besed))
+
 i = Igra("NEKAJ")
 i.crke = ['N',"E","K","A","M","R"]
+
+nova_igra()
 # print(i.napacne_crke())
 # print(i.pravilne_crke())
 #print(i.zmaga())
