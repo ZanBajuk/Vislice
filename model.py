@@ -9,7 +9,7 @@ PORAZ = 'X'
 ZACETEK = 'B'
 
 bazen_besed = []
-with open("VisliceProjekt/Vislice/besede.txt", encoding = "utf-8") as f:
+with open("besede.txt", encoding = "utf-8") as f:
     bazen_besed = [beseda.strip() for beseda in f.readlines()]
 
 class Igra:
