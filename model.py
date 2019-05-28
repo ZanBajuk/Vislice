@@ -1,4 +1,5 @@
 import random
+import json
 
 STEVILO_DOVOLJENIH_NAPAK = 10
 PRAVILNA_CRKA = "+" 
@@ -13,9 +14,12 @@ with open("besede.txt", encoding = "utf-8") as f:
     bazen_besed = [beseda.strip() for beseda in f.readlines()]
 
 class Igra:
-    def __init__(self, geslo):
+    def __init__(self, geslo, crke=None):
         self.geslo = geslo.upper()
-        self.crke = []
+        if crke is None:
+            self.crke = []
+        else:
+            self.crke = crke
 
     def napacne_crke(self):
         return [c for c in self.crke if c not in self.geslo]
@@ -74,21 +78,40 @@ def nova_igra():
     return Igra(random.choice(bazen_besed))
 
 class Vislice:
-    def __init__(self):
+
+    def __init__(self, datoteka_s_stanjem, datoteka_s_besedami):
         self.igre = {}
+        self.datoteka_s_stanjem = datoteka_s_stanjem
+        self.datoteka_s_besedami = datoteka_s_besedami
+        with open(self.datoteka_s_besedami, encoding = "utf-8") as f:
+            self.bazen_besed = [beseda.strip().upper() for beseda in f.readlines()]
+        self.nalozi_igre_iz_datoteke()
 
     def prost_id_igre(self):
         return len(self.igre)
 
     def nova_igra(self):
         id = self.prost_id_igre()
-        self.igre[id] = (nova_igra(), ZACETEK)
+        self.igre[id] = (Igra(random.choice(self.bazen_besed)), ZACETEK)
         return id
 
     def ugibaj(self, id_igre, crka):
         igra, _ = self.igre[id_igre]
         poskus = igra.ugibaj(crka)
         self.igre[id_igre] = (igra, poskus)
+        self.zapisi_igre_v_datoteko()
+
+    def zapisi_igre_v_datoteko(self):
+        with open(self.datoteka_s_stanjem, 'w') as f:
+            igre = {str(id_igre): {'poskus' : poskus, 'geslo' : igra.geslo, 'crke' : igra.crke} for id_igre, (igra, poskus) in self.igre.items()}
+            json.dump(igre, f)
+
+    def nalozi_igre_iz_datoteke(self):
+        with open (self.datoteka_s_stanjem) as f:
+            igre = json.loads(f.read())
+            self.igre = {}
+            for id_igre, opis_igre in igre.items():
+                self.igre[int(id_igre)] = (Igra(opis_igre['geslo'], crke=opis_igre['crke']), opis_igre['poskus'])
 
 #####################
 #v = Vislice()

@@ -1,16 +1,6 @@
-<!DOCTYPE html>
-<html>
+% rebase('base.html')
 
-<body>
-
-  <h1>Vislice</h1>
-    {{id_igre}}, {{poskus}}
-  <blockquote>
-    Vislice so najboljša igra za preganjanje dolgčasa (poleg tetrisa).
-    <small>Študentje</small>
-  </blockquote>
-
-  <table>
+<table>
     <tr>
         <td>
           {{igra.pravilni_del_gesla()}} <br />
@@ -23,11 +13,20 @@
     </tr>
   </table>
 
-  <form action="/igra/{{id_igre}}/" method="post">
-    Črka: <input type="text" name="crka">
-    <button type="submit">Poskusi</button>
-  </form>
-
-</body>
-
-</html>
+  % if igra.zmaga():
+    <span>Čestitke! Zmagal/a si!</span>
+    <form action="/nova_igra/" method="post">
+      <button type="submit">Nova igra</button>
+    </form>
+  % elif igra.poraz():
+    <span>Sožalje, več sreče prihodnič! LMAO!</span>
+    <form action="/nova_igra/" method="post">
+      <button type="submit">Nova igra</button>
+      Geslo je bilo: <span>{{igra.geslo}}</span>
+    </form>
+  % else:
+    <form action="/igra/" method="post">
+      Črka: <input type="text" name="crka" autofocus = "true">
+      <button type="submit">Poskusi</button>
+    </form>
+  % end
